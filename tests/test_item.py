@@ -20,7 +20,7 @@ def test_name():
 
 
 def test_instantiate_from_csv():
-    Item.instantiate_from_csv('src/items.csv')  # создание объектов из данных файла
+    Item.instantiate_from_csv('src/items.csv')
     assert len(Item.all) == 5
 
 
