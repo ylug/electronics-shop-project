@@ -12,3 +12,17 @@ def test_apply_discount():
     Item.pay_rate = 0.8
     item1.apply_discount()
     assert item1.price == 2666.4
+
+
+def test_name():
+    item1.name = 'СмартфонСмартфон'
+    assert item1.name == 'СмартфонСм'
+
+
+def test_instantiate_from_csv():
+    Item.instantiate_from_csv('src/items.csv')  # создание объектов из данных файла
+    assert len(Item.all) == 5
+
+
+def test_string_to_number():
+    assert Item.string_to_number('1') == 1
