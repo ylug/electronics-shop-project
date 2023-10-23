@@ -26,3 +26,11 @@ def test_instantiate_from_csv():
 
 def test_string_to_number():
     assert Item.string_to_number('1') == 1
+
+
+def test__repr__():
+    assert repr(item1) == "Item('СмартфонСм', 2666.4, 3)"
+
+
+def test__str__():
+    assert str(item1) == 'СмартфонСм'
