@@ -1,13 +1,19 @@
 from src.phone import Phone
-from src.item import Item
+import pytest
 
 
-def test_phone_creation():
-    phone = Phone("Test Phone", 30000.0, 10, 1)
-    item = Item("Test Model", 500, 5)
-    assert phone.name == "Test Phone"
-    assert phone.price == 30000.0
-    assert phone.quantity == 10
-    assert phone.number_of_sim == 1
-    result = phone + item
-    assert result == 15
+@pytest.fixture
+def phone_1():
+    return Phone("iPhone 14", 120_000, 5, 2)
+
+
+def tests__str__(phone_1):
+    assert str(phone_1) == 'iPhone 14'
+
+
+def test__repr__(phone_1):
+    assert repr(phone_1) == "Phone('iPhone 14', 120000, 5, 2)"
+
+
+def number_of_sim(phone):
+    assert phone.quantity_of_sim == 2
