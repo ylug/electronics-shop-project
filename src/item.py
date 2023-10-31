@@ -1,5 +1,4 @@
 import csv
-import os
 
 
 class Item:
@@ -59,16 +58,36 @@ class Item:
         self.price *= Item.pay_rate
 
     @classmethod
-    def instantiate_from_csv(cls, path):
-        cls.all = []
-        path_part = path.split("/")
-        path_file = os.path.join("..", path_part[0], path_part[1])
-        with open(path_file, encoding='windows-1251', newline='') as csv_file:
-            reader = csv.DictReader(csv_file)
-            for new in reader:
-                name, price, quantity = dict.values(new)
-                Item(name, price, quantity)
+    def instantiate_from_csv(cls, path='../src/items.csv'):
+        try:
+            cls.all = []
+            with open(path, 'r') as f:
+                reader = csv.DictReader(f)
+                for line in reader:
+                    item1 = (cls(line['name'], line['price'], line['quantity']))
+                    cls.all.append(item1)
+        except KeyError:
+            raise InstantiateFromCsvError()
+        except FileNotFoundError:
+            return f"Отсутствует файл items.csv"
+
+        def __add__(self, other):
+            if not isinstance(other, Item):
+                raise ValueError('Складывать можно только объекты Item и дочерние от них.')
+            return int(self.quantity + other.quantity)
 
     @staticmethod
     def string_to_number(s: str):
-        return int(float(s))
+        try:
+            return int(s)
+        except ValueError:
+            s = s.split('.')
+            return int(s[0])
+
+
+class InstantiateFromCsvError(Exception):
+    def __init__(self):
+        pass
+
+    def __str__(self):
+        return "Файл items.csv повреждён"

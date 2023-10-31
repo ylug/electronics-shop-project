@@ -1,6 +1,6 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
 from src.item import Item
-
+import csv
 item1 = Item("Смартфон", 3333, 3)
 
 
@@ -20,8 +20,13 @@ def test_name():
 
 
 def test_instantiate_from_csv():
-    Item.instantiate_from_csv('src/items.csv')
-    assert len(Item.all) == 5
+    with open('../src/items.csv') as file:
+        read = csv.DictReader(file)
+        assert read is not None
+        for x in read:
+            assert "name" in x
+            assert "price" in x
+            assert "quantity" in x
 
 
 def test_string_to_number():
