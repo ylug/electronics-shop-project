@@ -1,6 +1,8 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
 from src.item import Item
 import csv
+import pytest
+
 item1 = Item("Смартфон", 3333, 3)
 
 
@@ -39,3 +41,8 @@ def test__repr__():
 
 def test__str__():
     assert str(item1) == 'СмартфонСм'
+
+
+def test_instantiate_from_csv_file_not():
+    with pytest.raises(FileNotFoundError):
+        Item.instantiate_from_csv('nadir.csv')
